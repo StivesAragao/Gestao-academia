@@ -56,6 +56,16 @@ function MatriculasPage() {
 
     setMatriculas(updatedList);
     saveCollection('matriculas', updatedList);
+
+    // Atualiza o status do aluno correspondente
+    const targetAlunoId = parseInt(alunoId);
+    const novoStatusAluno = status === 'Ativo' ? 'Ativo' : 'Inativo';
+    const updatedAlunos = alunos.map(aluno => 
+      aluno.id === targetAlunoId ? { ...aluno, status: novoStatusAluno } : aluno
+    );
+    setAlunos(updatedAlunos);
+    saveCollection('alunos', updatedAlunos);
+
     clearForm();
   };
 
@@ -70,9 +80,19 @@ function MatriculasPage() {
 
   const handleDelete = (id) => {
     if (window.confirm('Tem certeza que deseja excluir esta matrícula?')) {
+      const targetMatricula = matriculas.find(m => m.id === id);
       const updatedList = matriculas.filter(m => m.id !== id);
       setMatriculas(updatedList);
       saveCollection('matriculas', updatedList);
+
+      if (targetMatricula) {
+        const targetAlunoId = targetMatricula.alunoId;
+        const updatedAlunos = alunos.map(aluno => 
+          aluno.id === targetAlunoId ? { ...aluno, status: 'Inativo' } : aluno
+        );
+        setAlunos(updatedAlunos);
+        saveCollection('alunos', updatedAlunos);
+      }
     }
   };
 
