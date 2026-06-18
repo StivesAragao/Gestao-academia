@@ -11,7 +11,7 @@ function LoginPage() {
     e.preventDefault();
     if (username === 'admin' && password === 'admin') {
       localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('username', 'William Silva');
+      localStorage.setItem('username', 'Stives Aragao');
       setError('');
       // Force reload or state update to make layout aware
       window.location.href = '/';
